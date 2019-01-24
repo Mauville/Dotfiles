@@ -1,0 +1,84 @@
+" Usual sets
+" https://github.com/kaHaleMaKai/ideavim-settings/blob/master/.ideavimrc
+
+set number
+set relativenumber
+let mapleader = " "
+set noerrorbells
+set visualbell
+set filetype
+set backspace=eol,start,indent
+
+" This detects when a file was read from the outside
+set autoread
+
+inoremap jj <Esc>
+inoremap JJ <Esc>
+set ignorecase
+set smartcase
+" set noscrollbind
+" set nocursorbind
+
+set undofile
+set history = 700
+set ruler
+set surround
+set incsearch
+set showcmd
+set cursorline
+set showmode
+set nocompatible
+set showmatch
+
+map j gj
+map gk
+
+" Some leader basics
+
+noremap <leader><leader> <Esc>/<CR>c4l
+noremap <leader>e :e C:\Users\X220\.ideavimrc <CR>
+noremap <leader>s :so C:\Users\X220\.ideavimrc <CR>
+noremap <leader>w :w <CR>
+noremap <leader>v "+p
+noremap <leader><CR> A<CR><Esc>
+noremap <leader><BS> I<CR><Esc>
+noremap <leader>qq :q!<CR>
+noremap <leader>q q
+nmap <C-J> ddp
+nmap <C-K> ddkP
+vmap <C-J> xkP`[V`]
+vmap <C-K> xp`[V`]
+
+"""""""""""""""""""""
+" Intellij custom actions
+"""""""""""""""""""""
+
+noremap <leader>j :action Run<CR>
+noremap gq :action ReformatCode<CR>
+noremap gcc :action CommentByLineComment<CR>
+
+" IntelliJ search looks much better
+nnoremap / :action Find<cr>
+nnoremap g/ :action FindInPath<cr>
+
+" built-in navigation to navigated items works better
+nnoremap <c-o> :action Back<cr>
+nnoremap <c-i> :action Forward<cr>
+
+" but preserve ideavim defaults
+nnoremap g<c-o> <c-o>
+nnoremap g<c-i> <c-i>
+
+"Look at error description
+noremap <leader>e <ESC>:action ShowErrorDescription<CR>
+
+" jump to next error
+noremap s] <ESC>:action GotoNextError<CR>
+
+" jump to previous error
+noremap s[ <ESC>:action GotoPreviousError<CR>
+
+set surround
+
+" open HTML file in browser
+noremap <leader>b :action OpenInBrowser<CR>
