@@ -124,10 +124,6 @@ Plugin 'easymotion/vim-easymotion'
 
 Plugin 'Yggdroot/indentLine'
 
-Plugin 'vim-scripts/VisIncr'
-
-Plugin 'dhruvasagar/vim-table-mode'
-
 call vundle#end()            " required
 filetype plugin indent on    " required
 

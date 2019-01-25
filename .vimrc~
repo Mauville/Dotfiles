@@ -157,10 +157,6 @@ Plugin 'easymotion/vim-easymotion'
 
 Plugin 'Yggdroot/indentLine'
 
-Plugin 'vim-scripts/VisIncr'
-
-Plugin 'dhruvasagar/vim-table-mode'
-
 "Colorschemes and appearance
 
 Plugin 'dracula/vim'
