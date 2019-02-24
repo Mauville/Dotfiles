@@ -236,3 +236,14 @@ nmap <C-J> ddp
 " Bubble multiple lines
 vmap <C-K> xkP`[V`]
 vmap <C-J> xp`[V`]
+
+" Set common abbreviations
+ab VPO Vargas Perez Oscar
+ab vpo Vargas Perez Oscar
+ab VPO Vargas Perez Oscar
+ab A016 A01657110
+
+"Put table corner separators in VimTable
+let g:table_mode_corner_corner='+'
+let g:table_mode_header_fillchar='='
+
