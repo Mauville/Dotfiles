@@ -36,7 +36,7 @@ map gk
 " Some leader basics
 
 noremap <leader><leader> <Esc>/<CR>c4l
-noremap <leader>e :e C:\Users\X220\.ideavimrc <CR>
+noremap <leader>e :action OpenFile C:\Users\X220\.ideavimrc <CR>
 noremap <leader>s :so C:\Users\X220\.ideavimrc <CR>
 noremap <leader>w :w <CR>
 noremap <leader>v "+p

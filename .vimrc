@@ -1,9 +1,3 @@
-"
-"
-"LINUX ONLY. REQUIRES VUNDLE
-"
-"
-"
 "Use x as colorscheme for Vim
 colorscheme torte
 
@@ -156,10 +150,6 @@ Plugin 'tpope/vim-commentary'
 Plugin 'easymotion/vim-easymotion'
 
 Plugin 'Yggdroot/indentLine'
-
-Plugin 'vim-scripts/VisIncr'
-
-Plugin 'dhruvasagar/vim-table-mode'
 
 "Colorschemes and appearance
 

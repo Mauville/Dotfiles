@@ -2,6 +2,7 @@
 <Settings component="StartMenu" version="4.3.1">
 	<MenuStyle value="Win7"/>
 	<MouseClick value="ClassicMenu"/>
+	<ShiftWin value="Nothing"/>
 	<RecentPrograms value="None"/>
 	<StartScreenShortcut value="0"/>
 	<SkinC2 value="Metro"/>

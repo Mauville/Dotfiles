@@ -27,6 +27,46 @@
 	SoundBeep, 2500,150
 	Return
 	
+
+:*:vpo::
+	Send Vargas Pérez Oscar
+	SoundBeep, 2500,150
+	Return
+
+:*:VPO::
+	Send VARGAS PÉREZ OSCAR
+	SoundBeep, 2500,150
+	Return
+
+:*:a016::
+	Send A01657110
+	SoundBeep, 2500,150
+	Return
+:*:A016::
+	Send A01657110
+	SoundBeep, 2500,150
+	Return
+
+:*:A016@::
+	Send A01657110@itesm.mx
+	SoundBeep, 2500,150
+	Return
+
+:*:a016@::
+	Send A01657110@itesm.mx
+	SoundBeep, 2500,150
+	Return
+
+:*:vpoa016::
+	Send Vargas Pérez Oscar A01657110
+	SoundBeep, 2500,150
+	Return
+
+:*:VPOA016::
+	Send VARGAS PÉREZ OSCAR A01657110
+	SoundBeep, 2500,150
+	Return
+
 ; :c*:ai::
 	; Send, Illustrator
 	; SoundBeep, 2500,150
@@ -90,7 +130,13 @@
 	Return
 
 
-~LButton & RButton::MouseClick, Middle
+~RButton & LButton Up::  
+MouseClick, Middle
+Return
+
+~LButton & RButton Up::  
+MouseClick, Middle
+Return
 
 Browser_Forward::^#Right
 Browser_Back::^#Left
@@ -101,9 +147,15 @@ Browser_Back::^#Left
 `::
     Send ^z
     Return 
+#IfWinActive
 
+#IfWinActive Windows PowerShell
+:*:sudo::
+    Send Start-Process Powershell -Verb runAs {Enter}
+    Return
 
 #IfWinActive
+
 $CapsLock::
     Send {Backspace}
     Return
@@ -179,3 +231,11 @@ $BackSpace::
 	else
 	    Run, %address%%qry%%tail%
 	    Return
+#h:: ;Open home folder
+	
+	Run, explorer.exe C:\Users\X220\Desktop\TEC\DOCS\TEC\PROGRAMMING\SEM2
+	Return
+
+#+h:: ;prepare a git env
+	Run, powershell.exe -noexit -NoLogo -command "cd C:\Users\X220\Desktop\TEC\DOCS;git status"
+	Return

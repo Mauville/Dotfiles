@@ -6,7 +6,8 @@ set smartcase
 
 " Silence bells 
 set noerrorbells
-set belloff=all
+set noeb vb t_vb=
+au GUIEnter * set vb t_vb=
 
 "Add a bit extra margin to the left
 set foldcolumn=1
@@ -128,6 +129,8 @@ Plugin 'vim-scripts/VisIncr'
 
 Plugin 'dhruvasagar/vim-table-mode'
 
+Plugin 'dahu/vim-asciidoc'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -238,10 +241,6 @@ vmap <C-K> xkP`[V`]
 vmap <C-J> xp`[V`]
 
 " Set common abbreviations
-ab VPO Vargas Perez Oscar
-ab vpo Vargas Perez Oscar
-ab VPO Vargas Perez Oscar
-ab A016 A01657110
 
 "Put table corner separators in VimTable
 let g:table_mode_corner_corner='+'
