@@ -177,7 +177,7 @@ noremap <leader>n :noh<CR>
 imap jj 
 
 "Map <leader>j  to find the next placeholder and replace
-noremap <leader><leader> <Esc>/<++><CR>c4l
+noremap <leader><leader> <Esc>/<CR>c4l
 
 "Map <leader>s to reload $MYVIMRC
 nnoremap <leader>s :so $MYVIMRC <CR>
@@ -246,3 +246,5 @@ vmap <C-J> xp`[V`]
 let g:table_mode_corner_corner='+'
 let g:table_mode_header_fillchar='='
 
+"Compile with Asciidoctor
+nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR>

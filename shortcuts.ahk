@@ -1,6 +1,8 @@
 ﻿#SingleInstance FORCE
 #HotkeyInterval 160
-#NoTrayIcon 
+
+SetTitleMatchMode, 2
+
 
 ^#j:: ;Searches on Jisho.org
 	prevclip=%clipboard%
@@ -154,6 +156,10 @@ Browser_Back::^#Left
     Send Start-Process Powershell -Verb runAs {Enter}
     Return
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Remap caps to delete and <BS> to Control <BS>;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 #IfWinActive
 
 $CapsLock::
@@ -171,8 +177,15 @@ $BackSpace::
     Send ^{Backspace}
     Return
 
+;;;;;;;;;;;;;;;;;;;
+;Vim Specific Bind;
+;;;;;;;;;;;;;;;;;;;
 
-
+#IfWinActive VIM
+    $BackSpace:: 
+    Send ^w
+    Return
+#IfWinActive
 
 
 #a::
@@ -238,4 +251,8 @@ $BackSpace::
 
 #+h:: ;prepare a git env
 	Run, powershell.exe -noexit -NoLogo -command "cd C:\Users\X220\Desktop\TEC\DOCS;git status"
+	Return
+
+#k:: ;run chips
+	Run,powershell.exe C:\Users\X220\Documents\zTRUE\chips\chips.ps1
 	Return
