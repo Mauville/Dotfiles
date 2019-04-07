@@ -134,7 +134,7 @@ SetTitleMatchMode, 2
 	Run, onenote
 	Return
 
-$#Enter UP:: ;PowerShell
+$#Enter UP:: ;PowerShell. If just ran, it breaks something I don't remember
 	send #r
 	sleep, 45
 	SendInput powershell -nologo -noexit -command "cd '%USERPROFILE%'"{Enter}

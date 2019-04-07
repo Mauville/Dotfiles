@@ -134,13 +134,17 @@ SetTitleMatchMode, 2
 	Run, onenote
 	Return
 
-$#Enter UP:: ;PowerShell. If just ran, it breaks something I don't remember
+$#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 	send #r
+	prevclip=%clipboard%
+	command = powershell -nologo -noexit -command "cd '%USERPROFILE%'"
+	clipboard:= command
 	sleep, 45
-	SendInput powershell -nologo -noexit -command "cd '%USERPROFILE%'"{Enter}
+	send ^v{enter}
+	clipboard:=prevclip
 	Return
 
-#+Enter UP:: ;Powershell in current directory
+#+Enter:: ;Powershell in current directory
 	Send {Escape}
 	Send ^l	
 	SendInput powershell -NoLogo{Enter}
