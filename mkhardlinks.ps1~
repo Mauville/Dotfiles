@@ -2,7 +2,7 @@ $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Pri
 
 
 if(!$currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
-Write-Host "You are not running as privileged user. Please get some permissions and come back then."-BackgroundColor Black -ForegroundColor Magenta
+Write-Host "You are not running as priviledged user. Please get some permissions and come back then."-BackgroundColor Black -ForegroundColor Magenta
 exit
 }
 
