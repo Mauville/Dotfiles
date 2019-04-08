@@ -189,6 +189,9 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
         Run, shutdown.exe /s /hybrid /t 1
 	Return
 
+#e:: ;Explorer on home directory
+    Run, explorer %USERPROFILE%
+    Return
 
 #1:: ;Help!
     Msgbox,  Firefox `n Anki `n oneNote `n Word `n Quit `n Config `n Source `n intelliJ `n Mail `n <br>alt Powershell `n BlackBoard `n /search
@@ -267,7 +270,7 @@ $BackSpace::
     Return 
 #IfWinActive
 
-#IfWinActive Windows PowerShell ;Imitate sudo command
+#IfWinActive Windows PowerShell ;Imitate sudo command in PowerShell
 :*:sudo::
     SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
     Return

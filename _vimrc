@@ -247,4 +247,5 @@ let g:table_mode_corner_corner='+'
 let g:table_mode_header_fillchar='='
 
 "Compile with Asciidoctor
-nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR>
+nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR><CR>
+nnoremap <leader>ap :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR>
