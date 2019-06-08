@@ -10,12 +10,12 @@
 "                                                        
 "                                                        
 
-
 let mapleader = " "
 set nocompatible
 
 
 "Set smartcase
+set ignorecase
 set smartcase
 
 " Silence bells 
@@ -132,6 +132,8 @@ Plugin 'L9'
 
 Plugin 'terryma/vim-multiple-cursors'
 
+Plugin 'PProvost/vim-ps1'
+
 Plugin 'tpope/vim-surround'
 
 Plugin 'mbbill/undotree'
@@ -147,8 +149,6 @@ Plugin 'vim-scripts/VisIncr'
 Plugin 'dhruvasagar/vim-table-mode'
 
 Plugin 'qpkorr/vim-renamer'
-
-Plugin 'ciaranm/inkpot'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -276,5 +276,4 @@ autocmd BufNewFile,BufRead *.adoc set fileencoding=utf8 bomb
 "Compile
 nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR><CR>
 nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR>
-
 
