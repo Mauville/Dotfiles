@@ -1,5 +1,19 @@
+"                                                        
+"              ,,                                        
+"`7MMF'   `7MF'db                                        
+"  `MA     ,V                                            
+"   VM;   ,V `7MM  `7MMpMMMb.pMMMb.     `7Mb,od8 ,p6"bo  
+"    MM.  M'   MM    MM    MM    MM       MM' "'6M'  OO  
+"    `MM A'    MM    MM    MM    MM       MM    8M       
+"     :MM;     MM    MM    MM    MM  ,,   MM    YM.    , 
+"      VF    .JMML..JMML  JMML  JMML.db .JMML.   YMbmd'  
+"                                                        
+"                                                        
+
+
 let mapleader = " "
 set nocompatible
+
 
 "Set smartcase
 set smartcase
@@ -109,7 +123,10 @@ set incsearch
 " alternatively, pass a path where Vundle should install plugins
 set rtp+=$HOME/.vim/bundle/Vundle.vim/
 call vundle#begin('$HOME/.vim/bundle/')
+
 Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'lmintmate/blue-mood-vim'
 
 Plugin 'L9'
 
@@ -129,7 +146,9 @@ Plugin 'vim-scripts/VisIncr'
 
 Plugin 'dhruvasagar/vim-table-mode'
 
-Plugin 'dahu/vim-asciidoc'
+Plugin 'qpkorr/vim-renamer'
+
+Plugin 'ciaranm/inkpot'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -176,8 +195,8 @@ noremap <leader>n :noh<CR>
 "Map jj in insert mode to Esc
 imap jj 
 
-"Map <leader>j  to find the next placeholder and replace
-noremap <leader><leader> <Esc>/<CR>c4l
+"Map <leader><leader> to find the next placeholder and replace
+noremap <leader><leader> <Esc>/<++><CR>c4l
 
 "Map <leader>s to reload $MYVIMRC
 nnoremap <leader>s :so $MYVIMRC <CR>
@@ -246,6 +265,16 @@ vmap <C-J> xp`[V`]
 let g:table_mode_corner_corner='+'
 let g:table_mode_header_fillchar='='
 
-"Compile with Asciidoctor
+
+""""""""""""
+"ASCIIDOCTOR
+""""""""""""
+
+"Set encoding to UTF-8 with BOM
+autocmd BufNewFile,BufRead *.adoc set fileencoding=utf8 bomb
+
+"Compile
 nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR><CR>
-nnoremap <leader>ap :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR>
+nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR>
+
+

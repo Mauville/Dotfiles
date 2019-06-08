@@ -1,0 +1,1 @@
+$env:userprofile\Desktop\Tec\Dotfiles\shortcuts.ahk
