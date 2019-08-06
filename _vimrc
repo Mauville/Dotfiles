@@ -12,6 +12,11 @@
 
 let mapleader = " "
 set nocompatible
+set fdm=syntax
+set enc=utf-8
+set fileencoding=utf-8
+set fileencodings=ucs-bom,utf8,prc
+
 
 
 "Set smartcase
@@ -132,7 +137,7 @@ Plugin 'L9'
 
 Plugin 'terryma/vim-multiple-cursors'
 
-Plugin 'PProvost/vim-ps1'
+Plugin 'sheerun/vim-polyglot'
 
 Plugin 'tpope/vim-surround'
 
@@ -149,6 +154,8 @@ Plugin 'vim-scripts/VisIncr'
 Plugin 'dhruvasagar/vim-table-mode'
 
 Plugin 'qpkorr/vim-renamer'
+
+Plugin 'vim-airline/vim-airline'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -208,7 +215,7 @@ nnoremap <leader>w :w <CR>
 nnoremap <leader>e :tabedit $MYVIMRC <CR>
 
 "Map <leader>p to run with python3
-nnoremap <leader>p :below term python3 %<CR>
+nnoremap <leader>p :below term python %<CR>
 
 "Map <leader>v to register paste
 nnoremap <leader>v "+p
@@ -277,3 +284,23 @@ autocmd BufNewFile,BufRead *.adoc set fileencoding=utf8 bomb
 nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR><CR>
 nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR>
 
+""""""""""
+"POWERLINE
+""""""""""
+
+let g:airline_powerline_fonts = 1
+silent! call airline#extensions#whitespace#disable()
+set renderoptions=type:directx,renmode:
+let g:python_highlight_space_errors =0
+
+""""""""""
+"WINDOWS
+""""""""""
+
+if has("win32")
+    set shell=powershell.exe
+    set shellpipe=|
+    set shellredir=>
+endif
+
+nnoremap zm zz

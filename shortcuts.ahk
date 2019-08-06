@@ -23,7 +23,7 @@
 
 #SingleInstance FORCE
 #HotkeyInterval 160
-#NoTrayIcon
+;#NoTrayIcon
 SetTitleMatchMode, 2
 SetWorkingDir %A_ScriptDir%
 
@@ -140,7 +140,7 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 	Return
 
 #j:: ;Intellij
-	Run, idea.bat
+	Run, idea64.exe
 	Return
 	
 #n:: ; OneNote
@@ -160,7 +160,7 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 #+Enter:: ;Powershell in current directory
 	Send {Escape}
 	Send ^l	
-	SendInput powershell -NoLogo{Enter}
+	SendInput powershell -nologo {Enter}
 	Return
 
 #f::  ;Run Firefox
@@ -168,7 +168,7 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
     Return
 
 #a:: ;Run Anki
-    Run "C:\Program Files (x86)\Anki\anki.exe"
+    Run C:\Program Files\Anki\anki.exe
     Return
 
 #h:: ;Open Tec folder
@@ -181,7 +181,7 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 	Return
 
 #c:: ;Edit this file
-    Run, powershell.exe -noexit -command "vim %USERPROFILE%/Desktop/TEC/Dotfiles/shortcuts.ahk"
+    Run, vim %USERPROFILE%/Desktop/TEC/Dotfiles/shortcuts.ahk
     Return
 
 #s:: ;Source this file
@@ -212,6 +212,9 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 
 #2:: ;Documentation
     Run, https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
+    Return
+#+2:: ;Extended Documentation
+    Run, https://asciidoctor.org/docs/user-manual/
     Return
 
 #/:: ;Search Prompt
@@ -260,10 +263,17 @@ $+CapsLock::
     Send +{Backspace}
     Return
 
+$!CapsLock::
+    Send +{Backspace}
+    Return
+
 $BackSpace:: 
     Send ^{Backspace}
     Return
 
+$+BackSpace:: 
+    Send ^+{Backspace}
+    Return
 
 
 
@@ -286,6 +296,18 @@ $BackSpace::
     Return 
 #IfWinActive
 
+#IfWinActive PowerShell ;Enable Alt+F4 in Cmder
+#q:: 
+    Send exit{enter}
+    Return 
+#IfWinActive
+
+#IfWinActive VIM ;Enable Alt+F4 in VIM
+#q:: 
+    Send :q!!{enter}
+    Return 
+#IfWinActive
+
 #IfWinActive VIM ;Enable Ctrl+BackSpace in Vim
     $BackSpace:: 
     Send ^w
@@ -298,7 +320,13 @@ $BackSpace::
     Return 
 #IfWinActive
 
-#IfWinActive Windows PowerShell ;Imitate sudo command in PowerShell
+#IfWinActive PowerShell ;Imitate sudo command in PowerShell
+:*:sudo::
+    SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
+    Return
+#IfWinActive
+
+#IfWinActive powerShell ;Imitate sudo command in PowerShell
 :*:sudo::
     SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
     Return
