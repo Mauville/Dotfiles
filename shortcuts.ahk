@@ -97,12 +97,12 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 	SoundBeep, 2500,150
 	Return
 
-:*:A01@::
+:*:atA016::
 	Send A01657110@itesm.mx
 	SoundBeep, 2500,150
 	Return
 
-:*:a01@::
+:*:at016::
 	Send a01657110@itesm.mx
 	SoundBeep, 2500,150
 	Return
@@ -131,10 +131,13 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 	Run, calc
 	Return
 
-#w:: ;Word
-	Run, WINWORD
+#w:: ;Whatsapp
+	Run, https://web.whatsapp.com
 	Return
 
+#+w:: ;Word
+	Run, WINWORD
+	Return
 #m:: ; Thunderbird
 	Run, thunderbird
 	Return
@@ -147,12 +150,16 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 	Run, onenote
 	Return
 
+#+PrintScreen:: ; Open Scrot directory
+	Run, explorer.exe  C:/Users/X220/Pictures/Screenshots
+	Return
+
 $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 	send #r
 	prevclip=%clipboard%
 	command = powershell -nologo -noexit -command "cd '%USERPROFILE%'"
 	clipboard:= command
-	sleep, 45
+	sleep, 60
 	send ^v{enter}
 	clipboard:=prevclip
 	Return
@@ -173,11 +180,11 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 
 #h:: ;Open Tec folder
 	
-	Run, explorer.exe C:\Users\X220\Desktop\TEC
+	Run, explorer.exe %Userprofile%\Desktop\TEC
 	Return
 
 #k:: ;run chips
-	Run,powershell.exe C:\Users\X220\Documents\zTRUE\chips\chips.ps1
+	Run,powershell.exe %Userprofile%\Documents\zTRUE\chips\chips.ps1
 	Return
 
 #c:: ;Edit this file
@@ -188,8 +195,12 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
     Reload
     Return
 
-#b:: ;BlackBoard
+#+b:: ;BlackBoard
     Run, https://miscursos.tec.mx/ultra/stream
+    Return
+
+#b:: ;Canvas
+    Run, https://experiencia21.tec.mx
     Return
 
 #x:: ;Shut it down!
@@ -215,6 +226,9 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
     Return
 #+2:: ;Extended Documentation
     Run, https://asciidoctor.org/docs/user-manual/
+    Return
+#!2:: ;Equations
+    Run, http://offcenterapps.com/asciidoctor/
     Return
 
 #/:: ;Search Prompt
@@ -293,6 +307,16 @@ $+BackSpace::
 #IfWinActive Windows PowerShell ;Enable Alt+F4 in Powershell
 #q:: 
     Send exit{enter}
+    Return 
+#IfWinActive
+
+#IfWinActive Mozilla Firefox ;Search selected word on engine
+^Space:: 
+    Send ^c 
+    Send ^t 
+    Sleep 155
+    Send ^v 
+    Send {Enter}
     Return 
 #IfWinActive
 

@@ -2,7 +2,7 @@ $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Pri
 
 
 if(!$currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
-Write-Host "You are not running as priviledged user. Please get some permissions and come back then."-BackgroundColor Black -ForegroundColor Magenta
+Write-Host "You are not running as privileged user. Please get some permissions and come back then."-BackgroundColor Black -ForegroundColor Magenta
 exit
 }
 
@@ -41,6 +41,7 @@ rm $Env:userprofile\_vimrc
 New-Item -Path C:\Windows\shortcuts.ahk -ItemType HardLink -Value .\shortcuts.ahk
 New-Item -Path $Env:userprofile\.ideavimrc -ItemType HardLink -Value .\.ideavimrc
 New-Item -Path $Env:userprofile\_vimrc -ItemType HardLink -Value .\_vimrc
+New-Item -Path $Env:userprofile\ADOC.css -ItemType HardLink -Value .\ADOC.css
 
 } 
 

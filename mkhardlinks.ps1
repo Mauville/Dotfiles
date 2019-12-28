@@ -8,7 +8,7 @@ exit
 
 
 
-$message  = 'This will create hard links to the dotfiles in the system. You need only pull from the repo to update the files this way. This will overwrite any _vimrc, .ideavim and shortcuts.ahk files.'
+$message  = 'This will create hard links to the dotfiles in the system. You need only pull from the repo to update the files this way. This will overwrite any _vimrc, .ideavim, powershell profiles, ADOC stylesheets and shortcuts.ahk files.'
 $question = 'Are you sure you want to proceed?'
 
 $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
@@ -41,6 +41,8 @@ rm $Env:userprofile\_vimrc
 New-Item -Path C:\Windows\shortcuts.ahk -ItemType HardLink -Value .\shortcuts.ahk
 New-Item -Path $Env:userprofile\.ideavimrc -ItemType HardLink -Value .\.ideavimrc
 New-Item -Path $Env:userprofile\_vimrc -ItemType HardLink -Value .\_vimrc
+New-Item -Path $Env:userprofile\ADOC.css -ItemType HardLink -Value .\ADOC.css
+New-Item -Path $Env:userprofile\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -ItemType HardLink -Value .\Microsoft.PowerShell_profile.ps1
 
 } 
 

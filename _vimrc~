@@ -16,12 +16,8 @@ set fdm=syntax
 set enc=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf8,prc
-set autoread
-set scrolloff =5
-:set textwidth=0
-:set wrapmargin=0
 
-nnoremap zm zz
+
 
 "Set smartcase
 set ignorecase
@@ -69,59 +65,39 @@ set ruler
 " do incremental searching
 set incsearch		
 
+"Plugins
 
-set nocompatible
-filetype off                  
+call plug#begin('$HOME/.vim/bundle/')
 
-" set the runtime path to include Vundle and initialize
-set rtp+=$HOME/.vim/bundle/Vundle.vim/
-call vundle#begin('$HOME/.vim/plugin/')
+Plug 'lmintmate/blue-mood-vim'
 
-Plugin 'VundleVim/Vundle.vim'
+Plug 'vim-scripts/L9'
 
-Plugin 'Mauville/vim-asciidoc'
+Plug 'bkad/CamelCaseMotion'
 
-Plugin 'habamax/vim-asciidoctor'
+Plug 'terryma/vim-multiple-cursors'
 
-Plugin 'lmintmate/blue-mood-vim'
+Plug 'sheerun/vim-polyglot'
 
-Plugin 'vim-scripts/L9'
+Plug 'tpope/vim-surround'
 
-Plugin 'bkad/CamelCaseMotion'
+Plug 'mbbill/undotree'
 
-Plugin 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-commentary'
 
-Plugin 'sheerun/vim-polyglot'
+Plug 'easymotion/vim-easymotion'
 
-Plugin 'tpope/vim-surround'
+Plug 'Yggdroot/indentLine'
 
-Plugin 'mbbill/undotree'
+Plug 'vim-scripts/VisIncr'
 
-Plugin 'tpope/vim-commentary'
+Plug 'dhruvasagar/vim-table-mode'
 
-Plugin 'easymotion/vim-easymotion'
+Plug 'qpkorr/vim-renamer'
 
-Plugin 'Yggdroot/indentLine'
+Plug 'vim-airline/vim-airline'
 
-Plugin 'vim-scripts/VisIncr'
-
-Plugin 'dhruvasagar/vim-table-mode'
-
-Plugin 'qpkorr/vim-renamer'
-
-Plugin 'vim-airline/vim-airline'
-
-Plugin 'dahu/Asif'
-
-Plugin 'dahu/vimple'
-
-Plugin 'Raimondi/VimRegStyle'
-
-Plugin 'vim-scripts/SyntaxRange'
-
-call vundle#end() 
-
-filetype plugin indent on
+call plug#end()
 
 set number
 set relativenumber
@@ -183,10 +159,6 @@ nnoremap <leader>p :below term python %<CR>
 "Map <leader>v to register paste
 nnoremap <leader>v "+p
 
-"Map <leader>y to register yank
-nnoremap <leader>y "+Y
-vnoremap <leader>y "+Y
-
 "Map leader enter to insert whitespace after cursor
 nnoremap <leader><CR> A<CR>
 
@@ -247,58 +219,9 @@ let g:table_mode_header_fillchar='='
 "Set encoding to UTF-8 with BOM
 autocmd BufNewFile,BufRead *.adoc set fileencoding=utf8 bomb
 
-" What extensions to use for HTML, default `[]`.
-let g:asciidoctor_extensions = ['asciidoctor-diagram']
-
-" Set css 
-let g:asciidoctor_css_path = '~'
-let g:asciidoctor_css = 'ADOC.css'
-
-" What extensions to use for PDF, default `[]`.
-let g:asciidoctor_pdf_extensions = ['asciidoctor-diagram']
-
 "Compile
- nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR><CR> */
- nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR> */
-
-" Function to create buffer local mappings
-"nnoremap <buffer> <leader>a :Asciidoctor2HTML<CR>
-"nnoremap <buffer> <leader>pa :Asciidoctor2PDF<CR>
-
-nnoremap <buffer> <leader>op :AsciidoctorOpenPDF<CR>
-nnoremap <buffer> <leader>oa :AsciidoctorOpenRAW<CR>
-
-nnoremap <buffer> <leader>ox :AsciidoctorOpenDOCX<CR>
-nnoremap <buffer> <leader>cx :Asciidoctor2DOCX<CR>
-
-" Fold sections, default `0`.
-let g:asciidoctor_folding = 1
-
-" Fold options, default `0`.
-let g:asciidoctor_fold_options = 1
-
-" List of filetypes to highlight, default `[]`
-let g:asciidoctor_fenced_languages = ['python', 'cpp', 'java']
-
-" Image pasting
-let g:asciidoctor_img_paste_command = 'gm.exe convert clipboard: %s%s'
-
-" first `%s` is a base document name:
-" (~/docs/hello-world.adoc => hello-world)
-" second `%s` is a number of the image.
-let g:asciidoctor_img_paste_pattern = 'img_%s_%s.png'
-
-" Paste image from clipboard
-nmap <leader>iv :AsciidoctorPasteImage<CR>
-
-" Avoid vimple collision with jj
-imap <c-x><c-c> <plug>vimple_completers_trigger
-
-""""""""""""
-"PYTHON CALC
-""""""""""""
-:command! -nargs=+ Calc :py print <args>
-:py from math import *
+nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR><CR>
+nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR>
 
 """"""""""
 "POWERLINE
@@ -314,11 +237,22 @@ let g:python_highlight_space_errors =0
 """"""""""
 
 if has("win32")
+    set shell=powershell.exe
     set shellpipe=|
     set shellredir=>
 endif
 
+nnoremap zm zz
 
 
-
-
+""""""""""
+"CONEMU
+""""""""""
+if !has("gui_running")
+    set term=xterm
+    set t_Co=256
+    let &t_AB="\e[48;5;%dm"
+    let &t_AF="\e[38;5;%dm"
+    set mouse=a
+    let g:airline_theme = 'zenburn'
+endif

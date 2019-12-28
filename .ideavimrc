@@ -83,3 +83,4 @@ set surround
 
 " open HTML file in browser
 noremap <leader>b :action OpenInBrowser<CR>
+set ideajoin
