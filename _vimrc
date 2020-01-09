@@ -266,7 +266,7 @@ let g:asciidoctor_pdf_extensions = ['asciidoctor-diagram']
 "nnoremap <buffer> <leader>pa :Asciidoctor2PDF<CR>
 
 nnoremap <buffer> <leader>op :AsciidoctorOpenPDF<CR>
-nnoremap <buffer> <leader>oa :AsciidoctorOpenRAW<CR>
+nnoremap <buffer> <leader>oa :AsciidoctorOpenHTML<CR>
 
 nnoremap <buffer> <leader>ox :AsciidoctorOpenDOCX<CR>
 nnoremap <buffer> <leader>cx :Asciidoctor2DOCX<CR>

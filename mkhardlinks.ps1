@@ -1,12 +1,14 @@
+param(
+    [switch]$silent = $false
+)
+
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-
-
 if(!$currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
-Write-Host "You are not running as privileged user. Please get some permissions and come back then."-BackgroundColor Black -ForegroundColor Magenta
-exit
+    Write-Host "You are not running as privileged user. Please get some permissions and come back then."-BackgroundColor Black -ForegroundColor Magenta
+    exit
 }
 
-
+if ($silent -eq $false){
 
 $message  = 'This will create hard links to the dotfiles in the system. You need only pull from the repo to update the files this way. This will overwrite any _vimrc, .ideavim, powershell profiles, ADOC stylesheets and shortcuts.ahk files.'
 $question = 'Are you sure you want to proceed?'
@@ -16,6 +18,15 @@ $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentL
 $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
 
 $decision = $Host.UI.PromptForChoice($message, $question, $choices, 1)
+
+}
+else {
+$decision = 0
+
+}
+
+
+
 
 if ($decision -eq 0) {
 # check if AHK is running
