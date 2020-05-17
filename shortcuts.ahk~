@@ -38,29 +38,29 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
         else
             Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
     }
-    ExitApp
+    ExitApp 
 }
 
 
-^#j:: ;Searches on Jisho.org
-	prevclip=%clipboard%
-	address=http://jisho.org/search/
-	Send ^c
-	query=%clipboard%
-	fulladd=%address%%query%
-	Run, %fulladd%
-	clipboard:=prevclip
-	Return 
+; ^#j:: ;Searches on Jisho.org
+; 	prevclip=%clipboard%
+; 	address=http://jisho.org/search/
+; 	Send ^c
+; 	query=%clipboard%
+; 	fulladd=%address%%query%
+; 	Run, %fulladd%
+; 	clipboard:=prevclip
+; 	Return 
 
-^#k:: ;Searches on Kanji Koohii
-	prevclip=%clipboard%
-	address=https://kanji.koohii.com/study/kanji/
-	Send ^c
-	query=%clipboard%
-	fulladd=%address%%query%
-	Run, %fulladd%
-	clipboard:=prevclip
-	Return
+; ^#k:: ;Searches on Kanji Koohii
+; 	prevclip=%clipboard%
+; 	address=https://kanji.koohii.com/study/kanji/
+; 	Send ^c
+; 	query=%clipboard%
+; 	fulladd=%address%%query%
+; 	Run, %fulladd%
+; 	clipboard:=prevclip
+; 	Return
 
 
 
@@ -75,6 +75,11 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 
 :*:ahk::
 	Send AutoHotKey
+	SoundBeep, 2500,150
+	Return
+
+:*:posh::
+	Send Powershell
 	SoundBeep, 2500,150
 	Return
 
@@ -128,7 +133,7 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 
 
 #d:: ;Calc
-	Run, calc
+Run, "C:\Program Files (x86)\SpeedCrunch\speedcrunch.exe"
 	Return
 
 #w:: ;Whatsapp
@@ -150,16 +155,12 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 	Run, onenote
 	Return
 
-#+PrintScreen:: ; Open Scrot directory
-	Run, explorer.exe  C:/Users/X220/Pictures/Screenshots
-	Return
-
 $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 	send #r
 	prevclip=%clipboard%
 	command = powershell -nologo -noexit -command "cd '%USERPROFILE%'"
 	clipboard:= command
-	sleep, 60
+	sleep, 130
 	send ^v{enter}
 	clipboard:=prevclip
 	Return
@@ -188,7 +189,7 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 	Return
 
 #c:: ;Edit this file
-    Run, vim %USERPROFILE%/Desktop/TEC/Dotfiles/shortcuts.ahk
+    Run, nvim-qt.exe %USERPROFILE%\Desktop\TEC\Dotfiles\shortcuts.ahk
     Return
 
 #s:: ;Source this file
@@ -200,11 +201,46 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
     Return
 
 #b:: ;Canvas
-    Run, https://experiencia21.tec.mx
+    Msgbox,  a algs `n n net `n d dbs `n x evap `n e eym `n v vidya
     Return
 
+;;;;;;;
+; courses
+;;;;;;;
+
+#!a:: ;algs
+    Run, https://experiencia21.tec.mx/courses/26950/assignments
+    Return
+
+#!n:: ;net
+    Run, https://experiencia21.tec.mx/courses/26948/assignments
+    Return
+
+#!d:: ;dbs
+    Run, https://experiencia21.tec.mx/courses/27021/assignments
+    Return
+
+#!e:: ;eym
+    Run, https://experiencia21.tec.mx/courses/27126/assignments
+    Return
+
+#!x:: ;evap
+    Run, https://experiencia21.tec.mx/courses/39671/assignments
+    Return
+
+#!v:: ;vidya
+    Run, https://experiencia21.tec.mx/courses/26712/assignments
+    Return
+
+
+#+x:: ;Restart
+    Msgbox, 36, Restart, Restart computer?
+    IfMsgbox Yes
+        Run, shutdown.exe /r /t 1
+	Return
+
 #x:: ;Shut it down!
-    Msgbox, 36, Shutdown, Shutdown computer?
+    Msgbox, 36, Shutdown, Shtdown computer?
     IfMsgbox Yes
         Run, shutdown.exe /s /hybrid /t 1
 	Return
@@ -221,9 +257,16 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
     Msgbox,  Firefox `n Anki `n oneNote `n Word `n Quit `n Config `n Source `n intelliJ `n Mail `n <br>alt Powershell `n BlackBoard `n /search
     Return
 
+
+#!2:: ;Extended Documentation
+    str :=" .... literal block `n ---- code block `n **** sidebar `n //// comment `n -- any block `n ____ blockquote `n ++++ passthrough `n  ==== example `n table `n |=== `n |header |header | `n `n |cell1|cell2|`n "
+    Msgbox, %str% 
+    Return
+
 #2:: ;Documentation
     Run, https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
     Return
+
 #+2:: ;Extended Documentation
     Run, https://asciidoctor.org/docs/user-manual/
     Return
@@ -240,7 +283,9 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 	    Return
 
 #v:: ;Visual Code
-    Run, code
+	Send {Escape}
+	Send ^l	
+    Send, powershell -nologo -noexit -command "code .; Start-Sleep -s 4;exit"{ENTER}
     Reload
     Return
 
@@ -323,13 +368,13 @@ $+BackSpace::
     Return 
 #IfWinActive
 
-#IfWinActive VIM ;Enable Alt+F4 in VIM
+#IfWinActive Neovim ;Enable Alt+F4 in VIM
 #q:: 
     Send :q!!{enter}
     Return 
 #IfWinActive
 
-#IfWinActive VIM ;Enable Ctrl+BackSpace in Vim
+#IfWinActive Neovim ;Enable Ctrl+BackSpace in Vim
     $BackSpace:: 
     Send ^w
     Return

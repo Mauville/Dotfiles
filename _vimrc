@@ -1,4 +1,3 @@
-"                                                        
 "              ,,                                        
 "`7MMF'   `7MF'db                                        
 "  `MA     ,V                                            
@@ -9,6 +8,15 @@
 "      VF    .JMML..JMML  JMML  JMML.db .JMML.   YMbmd'  
 "                                                        
 "                                                        
+
+
+if has('nvim')
+    set mouse=a
+    "source $VIMRUNTIME/mswin.vim
+    set selectmode mouse
+    behave xterm
+
+endif
 
 let mapleader = " "
 set nocompatible
@@ -61,7 +69,7 @@ set backup
 set undofile		
 
 " keep 50 lines of command line history
-set history=700		
+set history=10000
 
 " show the cursor position all the time
 set ruler		
@@ -75,51 +83,63 @@ filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=$HOME/.vim/bundle/Vundle.vim/
-call vundle#begin('$HOME/.vim/plugin/')
+call plug#begin('$HOME/.vim/plugged/')
 
-Plugin 'VundleVim/Vundle.vim'
+Plug 'atahabaki/archman-vim'
 
-Plugin 'Mauville/vim-asciidoc'
+Plug 'arp242/auto_mkdir2.vim' 
 
-Plugin 'habamax/vim-asciidoctor'
+Plug 'junegunn/goyo.vim'
 
-Plugin 'lmintmate/blue-mood-vim'
+Plug 'tpope/vim-fugitive'
 
-Plugin 'vim-scripts/L9'
+Plug 'airblade/vim-gitgutter'
 
-Plugin 'bkad/CamelCaseMotion'
+Plug 'scrooloose/nerdtree'
 
-Plugin 'terryma/vim-multiple-cursors'
+Plug 'VundleVim/Vundle.vim'
 
-Plugin 'sheerun/vim-polyglot'
+Plug 'Mauville/vim-asciidoc'
 
-Plugin 'tpope/vim-surround'
+Plug 'habamax/vim-asciidoctor'
 
-Plugin 'mbbill/undotree'
+Plug 'lmintmate/blue-mood-vim'
 
-Plugin 'tpope/vim-commentary'
+Plug 'vim-scripts/L9'
 
-Plugin 'easymotion/vim-easymotion'
+Plug 'bkad/CamelCaseMotion'
 
-Plugin 'Yggdroot/indentLine'
+Plug 'terryma/vim-multiple-cursors'
 
-Plugin 'vim-scripts/VisIncr'
+Plug 'sheerun/vim-polyglot'
 
-Plugin 'dhruvasagar/vim-table-mode'
+Plug 'tpope/vim-surround'
 
-Plugin 'qpkorr/vim-renamer'
+Plug 'mbbill/undotree'
 
-Plugin 'vim-airline/vim-airline'
+Plug 'tpope/vim-commentary'
 
-Plugin 'dahu/Asif'
+Plug 'easymotion/vim-easymotion'
 
-Plugin 'dahu/vimple'
+Plug 'Yggdroot/indentLine'
 
-Plugin 'Raimondi/VimRegStyle'
+Plug 'vim-scripts/VisIncr'
 
-Plugin 'vim-scripts/SyntaxRange'
+Plug 'dhruvasagar/vim-table-mode'
 
-call vundle#end() 
+Plug 'qpkorr/vim-renamer'
+
+Plug 'itchyny/lightline.vim'
+
+Plug 'dahu/Asif'
+
+Plug 'dahu/vimple'
+
+Plug 'Raimondi/VimRegStyle'
+
+Plug 'vim-scripts/SyntaxRange'
+
+call plug#end() 
 
 filetype plugin indent on
 
@@ -174,8 +194,15 @@ nnoremap <leader>s :so $MYVIMRC <CR>
 "Map <leader>w to write
 nnoremap <leader>w :w <CR>
 
-"Map <leader>e to edit $MYVIMRC
-nnoremap <leader>e :tabedit $MYVIMRC <CR>
+if has('nvim')
+    "Map <leader>e to edit $MYVIMRC
+    nnoremap <leader>e :tabedit ~/_vimrc <CR>
+endif
+
+if !has('nvim')
+    "Map <leader>e to edit $MYVIMRC
+    nnoremap <leader>e :tabedit $MYVIMRC <CR>
+endif
 
 "Map <leader>p to run with python3
 nnoremap <leader>p :below term python %<CR>
@@ -194,7 +221,7 @@ nnoremap <leader><CR> A<CR>
 nnoremap <leader><BS> I<CR>
 
 "Map leader j to compile with javac
-nnoremap <leader>j :below term javac %<CR>
+nnoremap <leader>j :!javac %<CR>
 
 "Map leader qq to quit
 nnoremap <leader>qq :q!<CR>
@@ -220,7 +247,7 @@ endfunction
 autocmd BufEnter * silent! lcd %:p:h
 
 " Open terminal
-nnoremap <leader>r :below terminal<CR>
+nnoremap <leader>r :NERDTreeToggle<CR>
 
 "Map <leader>m to easymotion
 map <Leader>m <Plug>(easymotion-prefix)
@@ -258,8 +285,9 @@ let g:asciidoctor_css = 'ADOC.css'
 let g:asciidoctor_pdf_extensions = ['asciidoctor-diagram']
 
 "Compile
- nnoremap <leader>a :!asciidoctor -r asciidoctor-diagram %<CR><CR> */
- nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -r asciidoctor-pdf % <CR><CR> */
+ nnoremap <leader>a :!asciidoctor-latex -b html -r asciidoctor-diagram -a config=..\plantuml.cfg %<CR><CR>
+ nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -a config=..\plantuml.cfg  -r asciidoctor-pdf % <CR><CR>
+ nnoremap <leader>pal :! docker run --rm -v ${pwd}:/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf -r asciidoctor-diagram -r -a config=plantuml.cfg asciidoctor-mathematical % <CR><CR>
 
 " Function to create buffer local mappings
 "nnoremap <buffer> <leader>a :Asciidoctor2HTML<CR>
@@ -297,17 +325,8 @@ imap <c-x><c-c> <plug>vimple_completers_trigger
 """"""""""""
 "PYTHON CALC
 """"""""""""
-:command! -nargs=+ Calc :py print <args>
-:py from math import *
-
-""""""""""
-"POWERLINE
-""""""""""
-
-let g:airline_powerline_fonts = 1
-silent! call airline#extensions#whitespace#disable()
-set renderoptions=type:directx,renmode:
-let g:python_highlight_space_errors =0
+:command! -nargs=+ Calc :python3 print(<args>)
+:python3 from math import *
 
 """"""""""
 "WINDOWS

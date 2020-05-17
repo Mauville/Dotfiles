@@ -21,6 +21,7 @@ set smartcase
 
 set undofile
 set history = 700
+set ideajoin
 set ruler
 set surround
 set incsearch
@@ -79,8 +80,11 @@ noremap s] <ESC>:action GotoNextError<CR>
 " jump to previous error
 noremap s[ <ESC>:action GotoPreviousError<CR>
 
-set surround
+" View documentation (Go Source)
+noremap gs :action QuickJavaDoc<CR>
 
-" open HTML file in browser
+
+" WEBSTORM
+" 
 noremap <leader>b :action OpenInBrowser<CR>
-set ideajoin
+noremap gq :action ReformatWithPrettierAction<CR>

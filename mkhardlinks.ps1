@@ -52,8 +52,10 @@ rm $Env:userprofile\_vimrc
 New-Item -Path C:\Windows\shortcuts.ahk -ItemType HardLink -Value .\shortcuts.ahk
 New-Item -Path $Env:userprofile\.ideavimrc -ItemType HardLink -Value .\.ideavimrc
 New-Item -Path $Env:userprofile\_vimrc -ItemType HardLink -Value .\_vimrc
+New-Item -Path $Env:userprofile\plantuml.cfg -ItemType HardLink -Value .\plantuml.cfg
 New-Item -Path $Env:userprofile\ADOC.css -ItemType HardLink -Value .\ADOC.css
 New-Item -Path $Env:userprofile\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 -ItemType HardLink -Value .\Microsoft.PowerShell_profile.ps1
+New-Item -Path $Env:localappdata\nvim\ginit.vim -ItemType HardLink -Value .\ginit.vim
 
 } 
 

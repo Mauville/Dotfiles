@@ -3,13 +3,23 @@ Set-Alias ls Get-ChildItemColor -Option AllScope
 Set-Alias l Get-ChildItemColorFormatWide -Option AllScope
 
 
+function chocolist{ choco list --local-only --all-versions | less }
+
+Set-Alias clist chocolist 
+
+Set-Alias e explorerhere -Option AllScope
+
 Set-Alias g git
 
-Set-Alias v vim
+Set-Alias v nvim
+
+Set-Alias vim nvim
 
 Set-Alias a adb
 
 Set-Alias j java
+
+Set-Alias dk docker
 
 Set-Alias jc javac
 
