@@ -1,24 +1,29 @@
-"              ,,                                        
-"`7MMF'   `7MF'db                                        
-"  `MA     ,V                                            
-"   VM;   ,V `7MM  `7MMpMMMb.pMMMb.     `7Mb,od8 ,p6"bo  
-"    MM.  M'   MM    MM    MM    MM       MM' "'6M'  OO  
-"    `MM A'    MM    MM    MM    MM       MM    8M       
-"     :MM;     MM    MM    MM    MM  ,,   MM    YM.    , 
-"      VF    .JMML..JMML  JMML  JMML.db .JMML.   YMbmd'  
-"                                                        
-"                                                        
-
+"              ,,
+"`7MMF'   `7MF'db
+"  `MA     ,V
+"   VM;   ,V `7MM  `7MMpMMMb.pMMMb.     `7Mb,od8 ,p6"bo
+"    MM.  M'   MM    MM    MM    MM       MM' "'6M'  OO
+"    `MM A'    MM    MM    MM    MM       MM    8M
+"     :MM;     MM    MM    MM    MM  ,,   MM    YM.    ,
+"      VF    .JMML..JMML  JMML  JMML.db .JMML.   YMbmd'
+"
+"
+let mapleader = " "
 
 if has('nvim')
+    " Enable actually working mouse stuff
     set mouse=a
-    "source $VIMRUNTIME/mswin.vim
-    set selectmode mouse
+    set title
     behave xterm
-
+    " Make Right Click behave like Powershell
+    nnoremap <RightRelease> i"+p
+    inoremap <RightRelease> <C-R>"+p
+    vnoremap <RightRelease> d"+p
+    cnoremap <RightRelease> <C-R>+
+    nnoremap <leader>e :tabedit ~/_vimrc <CR>
 endif
 
-let mapleader = " "
+set title
 set nocompatible
 set fdm=syntax
 set enc=utf-8
@@ -26,16 +31,20 @@ set fileencoding=utf-8
 set fileencodings=ucs-bom,utf8,prc
 set autoread
 set scrolloff =5
-:set textwidth=0
-:set wrapmargin=0
+set textwidth=0
+set wrapmargin=0
+set mousemodel=popup
 
 nnoremap zm zz
+
+"Map <BS> to delete selection
+vnoremap <BS> d
 
 "Set smartcase
 set ignorecase
 set smartcase
 
-" Silence bells 
+" Silence bells
 set noerrorbells
 set noeb vb t_vb=
 au GUIEnter * set vb t_vb=
@@ -52,7 +61,7 @@ set smarttab
 "Use tabstop to specify width of tab in columns
 set tabstop=4
 
-"These two need linking for BS to work 
+"These two need linking for BS to work
 
 "Use shiftwidth to make backspace delete a tab
 set shiftwidth=4
@@ -63,55 +72,44 @@ set softtabstop=4
 set backspace=indent,eol,start
 
 " keep a backup file (restore to previous version)
-set backup		
+set backup
 
 " keep an undo file (undo changes after closing)
-set undofile		
+set undofile
 
-" keep 50 lines of command line history
+" keep n lines of command line history
 set history=10000
 
 " show the cursor position all the time
-set ruler		
+set ruler
 
 " do incremental searching
-set incsearch		
+set incsearch
 
 
 set nocompatible
-filetype off                  
+filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=$HOME/.vim/bundle/Vundle.vim/
 call plug#begin('$HOME/.vim/plugged/')
 
-Plug 'atahabaki/archman-vim'
+" Colorschemes
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
-Plug 'arp242/auto_mkdir2.vim' 
+" Plug 'SirVer/ultisnips'
+
+Plug 'dense-analysis/ale'
+
+Plug 'jiangmiao/auto-pairs'
+
+Plug 'arp242/auto_mkdir2.vim'
 
 Plug 'junegunn/goyo.vim'
-
-Plug 'tpope/vim-fugitive'
-
-Plug 'airblade/vim-gitgutter'
-
-Plug 'scrooloose/nerdtree'
-
-Plug 'VundleVim/Vundle.vim'
-
-Plug 'Mauville/vim-asciidoc'
-
-Plug 'habamax/vim-asciidoctor'
-
-Plug 'lmintmate/blue-mood-vim'
 
 Plug 'vim-scripts/L9'
 
 Plug 'bkad/CamelCaseMotion'
-
-Plug 'terryma/vim-multiple-cursors'
-
-Plug 'sheerun/vim-polyglot'
 
 Plug 'tpope/vim-surround'
 
@@ -119,17 +117,18 @@ Plug 'mbbill/undotree'
 
 Plug 'tpope/vim-commentary'
 
-Plug 'easymotion/vim-easymotion'
-
 Plug 'Yggdroot/indentLine'
 
 Plug 'vim-scripts/VisIncr'
 
-Plug 'dhruvasagar/vim-table-mode'
-
 Plug 'qpkorr/vim-renamer'
 
 Plug 'itchyny/lightline.vim'
+
+Plug 'tpope/vim-repeat'
+
+
+"ADOC
 
 Plug 'dahu/Asif'
 
@@ -137,9 +136,15 @@ Plug 'dahu/vimple'
 
 Plug 'Raimondi/VimRegStyle'
 
+Plug 'sheerun/vim-polyglot'
+
 Plug 'vim-scripts/SyntaxRange'
 
-call plug#end() 
+Plug 'Mauville/vim-asciidoc'
+
+Plug 'habamax/vim-asciidoctor'
+
+call plug#end()
 
 filetype plugin indent on
 
@@ -164,8 +169,16 @@ set noshowmode
 map j gj
 map k gk
 
+""" SPELL
+
 "Map F7 to spellchecker
 map <F7> :setlocal spell! spelllang=en_us<CR>
+map <F8> :setlocal spell! spelllang=es<CR>
+"Enable autocomplete from dict
+set complete+=kspell
+nnoremap <F10> [S
+nnoremap <F11> z=1<CR><CR>
+nnoremap <F12> ]S
 
 "show commands while you type
 set showcmd
@@ -194,11 +207,6 @@ nnoremap <leader>s :so $MYVIMRC <CR>
 "Map <leader>w to write
 nnoremap <leader>w :w <CR>
 
-if has('nvim')
-    "Map <leader>e to edit $MYVIMRC
-    nnoremap <leader>e :tabedit ~/_vimrc <CR>
-endif
-
 if !has('nvim')
     "Map <leader>e to edit $MYVIMRC
     nnoremap <leader>e :tabedit $MYVIMRC <CR>
@@ -212,7 +220,7 @@ nnoremap <leader>v "+p
 
 "Map <leader>y to register yank
 nnoremap <leader>y "+Y
-vnoremap <leader>y "+Y
+vnoremap <leader>y "+y
 
 "Map leader enter to insert whitespace after cursor
 nnoremap <leader><CR> A<CR>
@@ -227,7 +235,7 @@ nnoremap <leader>j :!javac %<CR>
 nnoremap <leader>qq :q!<CR>
 
 "Map <leader>t to prepend :tabdo
-nnoremap <leader>t :tabdo 
+nnoremap <leader>t :tabdo
 
 " Motion for "next object". For example, "din(" would go to the next "()" pair
 " and delete its contents.
@@ -246,8 +254,8 @@ endfunction
 " Automatically change cwd to the one that the current file is on
 autocmd BufEnter * silent! lcd %:p:h
 
-" Open terminal
-nnoremap <leader>r :NERDTreeToggle<CR>
+" Open Tree
+nnoremap <F4> :NERDTreeToggle<CR>
 
 "Map <leader>m to easymotion
 map <Leader>m <Plug>(easymotion-prefix)
@@ -277,7 +285,7 @@ autocmd BufNewFile,BufRead *.adoc set fileencoding=utf8 bomb
 " What extensions to use for HTML, default `[]`.
 let g:asciidoctor_extensions = ['asciidoctor-diagram']
 
-" Set css 
+" Set css
 let g:asciidoctor_css_path = '~'
 let g:asciidoctor_css = 'ADOC.css'
 
@@ -288,7 +296,7 @@ let g:asciidoctor_pdf_extensions = ['asciidoctor-diagram']
  nnoremap <leader>a :!asciidoctor-latex -b html -r asciidoctor-diagram -a config=..\plantuml.cfg %<CR><CR>
  nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -a config=..\plantuml.cfg  -r asciidoctor-pdf % <CR><CR>
  nnoremap <leader>pal :! docker run --rm -v ${pwd}:/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf -r asciidoctor-diagram -r -a config=plantuml.cfg asciidoctor-mathematical % <CR><CR>
-
+ nnoremap <leader>aw :Asciidoctor2DOCX<CR>
 " Function to create buffer local mappings
 "nnoremap <buffer> <leader>a :Asciidoctor2HTML<CR>
 "nnoremap <buffer> <leader>pa :Asciidoctor2PDF<CR>
@@ -297,13 +305,16 @@ nnoremap <buffer> <leader>op :AsciidoctorOpenPDF<CR>
 nnoremap <buffer> <leader>oa :AsciidoctorOpenHTML<CR>
 
 nnoremap <buffer> <leader>ox :AsciidoctorOpenDOCX<CR>
-nnoremap <buffer> <leader>cx :Asciidoctor2DOCX<CR>
 
 " Fold sections, default `0`.
 let g:asciidoctor_folding = 1
 
 " Fold options, default `0`.
 let g:asciidoctor_fold_options = 1
+
+" Conceal *bold*, _italic_, `code` and urls in lists and paragraphs, default `0`.
+" See limitations in end of the README
+let g:asciidoctor_syntax_conceal = 1
 
 " List of filetypes to highlight, default `[]`
 let g:asciidoctor_fenced_languages = ['python', 'cpp', 'java']
@@ -325,8 +336,8 @@ imap <c-x><c-c> <plug>vimple_completers_trigger
 """"""""""""
 "PYTHON CALC
 """"""""""""
-:command! -nargs=+ Calc :python3 print(<args>)
-:python3 from math import *
+":command! -nargs=+ Calc :python3 print(<args>)
+":python3 from math import *
 
 """"""""""
 "WINDOWS
@@ -338,6 +349,45 @@ if has("win32")
 endif
 
 
+" Enable true colors for OneLight
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+syntax on
+set t_Co=256
+set cursorline
+colorscheme onehalfdark
+" lightline
+" let g:lightline.colorscheme='onehalfdark'
+let g:lightline = {
+    \ 'colorscheme': 'onehalfdark',
+    \}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\   'python': ['autopep8'],
+\}
+let g:ale_linters = {
+\   'markdown': ['writegood'],
+\ }
 
+let b:ale_linter_aliases = ['markdown', 'asciidoctor']
+" let g:ale_linters_explicit = 1
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
+let g:ale_javascript_standard_executable='/path/to/global/standard'
 
+" let g:ale_linters_explicit            = 1
+let g:ale_lint_on_text_changed        = 'never'
+let g:ale_lint_on_enter               = 0
+let g:ale_lint_on_save                = 1
+let g:ale_fix_on_save                 = 1
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '.'
 
+" Ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"

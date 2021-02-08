@@ -1,4 +1,4 @@
-﻿;                                                                                                       
+﻿;
 ;                                                                                                       ;
 ;                                                                                                       ;
 ;         db                 mm          `7MMF'  `7MMF'         mm   `7MMF' `YMM'                       ;
@@ -17,13 +17,13 @@
 
 
 
-;TODO get some env variables going. 
+;TODO get some env variables going.
 ;TODO remove hard paths
 ;TODO get an auto rice thing going with choco
 
 #SingleInstance FORCE
 #HotkeyInterval 160
-;#NoTrayIcon
+#NoTrayIcon
 SetTitleMatchMode, 2
 SetWorkingDir %A_ScriptDir%
 
@@ -38,7 +38,7 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
         else
             Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
     }
-    ExitApp 
+    ExitApp
 }
 
 
@@ -50,7 +50,7 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 ; 	fulladd=%address%%query%
 ; 	Run, %fulladd%
 ; 	clipboard:=prevclip
-; 	Return 
+; 	Return
 
 ; ^#k:: ;Searches on Kanji Koohii
 ; 	prevclip=%clipboard%
@@ -63,8 +63,8 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 ; 	Return
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;;;;                       ;;;;
 ;;;;     Abbreviations     ;;;;
 ;;;;                       ;;;;
@@ -112,12 +112,12 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 	SoundBeep, 2500,150
 	Return
 
-:*:vpoa016::
+:*:vpa::
 	Send Vargas Perez Oscar A01657110
 	SoundBeep, 2500,150
 	Return
 
-:*:VPOA016::
+:*:VPA::
 	Send VARGAS PEREZ OSCAR A01657110
 	SoundBeep, 2500,150
 	Return
@@ -130,6 +130,9 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 ;;;;                    ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+#z:: ;Wox
+   Send ^!.
+   Return
 
 
 #d:: ;Calc
@@ -143,6 +146,7 @@ Run, "C:\Program Files (x86)\SpeedCrunch\speedcrunch.exe"
 #+w:: ;Word
 	Run, WINWORD
 	Return
+
 #m:: ; Thunderbird
 	Run, thunderbird
 	Return
@@ -150,24 +154,32 @@ Run, "C:\Program Files (x86)\SpeedCrunch\speedcrunch.exe"
 #j:: ;Intellij
 	Run, idea64.exe
 	Return
-	
+
 #n:: ; OneNote
 	Run, onenote
 	Return
 
-$#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
+$#Enter:: ;PowerShell. Control has been delegated to Wox
+	;send #-
+	;sleep, 550
+	;send {enter}
+	;sleep, 550
+	;send !{tab}
+	;sleep, 250
+	;send a
+    ;Return
 	send #r
 	prevclip=%clipboard%
 	command = powershell -nologo -noexit -command "cd '%USERPROFILE%'"
 	clipboard:= command
-	sleep, 130
+	sleep, 450
 	send ^v{enter}
 	clipboard:=prevclip
 	Return
 
 #+Enter:: ;Powershell in current directory
 	Send {Escape}
-	Send ^l	
+	Send ^l
 	SendInput powershell -nologo {Enter}
 	Return
 
@@ -180,7 +192,7 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
     Return
 
 #h:: ;Open Tec folder
-	
+
 	Run, explorer.exe %Userprofile%\Desktop\TEC
 	Return
 
@@ -200,36 +212,29 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
     Run, https://miscursos.tec.mx/ultra/stream
     Return
 
-#b:: ;Canvas
-    Msgbox,  a algs `n n net `n d dbs `n x evap `n e eym `n v vidya
-    Return
-
 ;;;;;;;
 ; courses
 ;;;;;;;
 
-#!a:: ;algs
-    Run, https://experiencia21.tec.mx/courses/26950/assignments
+
+#!a:: ;ADMIN
+    Run, https://experiencia21.tec.mx/courses/110411/assignments
     Return
 
-#!n:: ;net
-    Run, https://experiencia21.tec.mx/courses/26948/assignments
++!a::
+    Run, zoommtg://zoom.us/join?action=join&confno=4771816524
     Return
 
-#!d:: ;dbs
-    Run, https://experiencia21.tec.mx/courses/27021/assignments
++!r:: ;Chess
+    Run, zoommtg://zoom.us/join?action=join&confno=6970653171
     Return
 
-#!e:: ;eym
-    Run, https://experiencia21.tec.mx/courses/27126/assignments
+#!d:: ;Databases
+    Run, https://experiencia21.tec.mx/courses/110342/assignments
     Return
 
-#!x:: ;evap
-    Run, https://experiencia21.tec.mx/courses/39671/assignments
-    Return
-
-#!v:: ;vidya
-    Run, https://experiencia21.tec.mx/courses/26712/assignments
++!d::
+    Run, zoommtg://zoom.us/join?action=join&confno=2736320870
     Return
 
 
@@ -240,7 +245,7 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 	Return
 
 #x:: ;Shut it down!
-    Msgbox, 36, Shutdown, Shtdown computer?
+    Msgbox, 36, Shutdown, Shutdown computer?
     IfMsgbox Yes
         Run, shutdown.exe /s /hybrid /t 1
 	Return
@@ -259,12 +264,16 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 
 
 #!2:: ;Extended Documentation
-    str :=" .... literal block `n ---- code block `n **** sidebar `n //// comment `n -- any block `n ____ blockquote `n ++++ passthrough `n  ==== example `n table `n |=== `n |header |header | `n `n |cell1|cell2|`n "
-    Msgbox, %str% 
+    str :=" .... literal block `n ---- code block `n **** sidebar `n//// comment `n -- any block `n ____ blockquote `n ++++ passthrough/latex `n  ==== example `n table `n |=== `n |header |header | `n `n |cell1|cell2|`n `n` NOTE: ℹ,`n TIP: 💡`n IMPORTANT:🔴, `n WARNING:⚠, `n `CAUTION:🔥 "
+    Msgbox, %str%
     Return
 
 #2:: ;Documentation
     Run, https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
+    Return
+
+#3:: ;Documentation
+    Run, https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols#Set_and.2For_logic_notation
     Return
 
 #+2:: ;Extended Documentation
@@ -284,7 +293,7 @@ $#Enter:: ;PowerShell. If just ran, it breaks something I don't remember
 
 #v:: ;Visual Code
 	Send {Escape}
-	Send ^l	
+	Send ^l
     Send, powershell -nologo -noexit -command "code .; Start-Sleep -s 4;exit"{ENTER}
     Reload
     Return
@@ -323,11 +332,11 @@ $!CapsLock::
     Send +{Backspace}
     Return
 
-$BackSpace:: 
+$BackSpace::
     Send ^{Backspace}
     Return
 
-$+BackSpace:: 
+$+BackSpace::
     Send ^+{Backspace}
     Return
 
@@ -347,35 +356,41 @@ $+BackSpace::
     Return
 
 #IfWinActive Windows PowerShell ;Enable Alt+F4 in Powershell
-#q:: 
-    Send exit{enter}
-    Return 
+#q::
+    Send {Esc}exit{enter}
+    Return
 #IfWinActive
 
 #IfWinActive Mozilla Firefox ;Search selected word on engine
-^Space:: 
-    Send ^c 
-    Send ^t 
-    Sleep 155
-    Send ^v 
+^Space::
+    Send ^c
+    Send ^t
+    Sleep 255
+    Send ^v
     Send {Enter}
-    Return 
+    Return
 #IfWinActive
 
 #IfWinActive PowerShell ;Enable Alt+F4 in Cmder
-#q:: 
+#q::
     Send exit{enter}
-    Return 
+    Return
 #IfWinActive
 
 #IfWinActive Neovim ;Enable Alt+F4 in VIM
-#q:: 
+#q::
     Send :q!!{enter}
-    Return 
+    Return
+#IfWinActive
+
+#IfWinActive Thunderbird ; Archive on thunderbird
+F12::
+    Send {AppsKey}h
+    Return
 #IfWinActive
 
 #IfWinActive Neovim ;Enable Ctrl+BackSpace in Vim
-    $BackSpace:: 
+    $BackSpace::
     Send ^w
     Return
 #IfWinActive
@@ -383,7 +398,7 @@ $+BackSpace::
 #IfWinActive Anki - Oscar ;Remap ` to undo in Anki
 `::
     Send ^z
-    Return 
+    Return
 #IfWinActive
 
 #IfWinActive PowerShell ;Imitate sudo command in PowerShell
@@ -457,13 +472,13 @@ If (dx**2 > 0 and dx**2>dy**2) ;edit 4 for sensitivity (changes sensitivity to m
 If (dy**2 > 0 and dy**2>dx**2) ;edit 0 for sensitivity (changes sensitivity to movement)
 {
 	times := Abs(dy)/1 ;edit 1 for sensitivity (changes frequency of scroll signal)
-	Loop, %times% 
+	Loop, %times%
 	{
 		If (dy > 0)
 			Click WheelDown
 		Else
 			Click WheelUp
-	}   
+	}
 }
 MouseMove ox, oy
 return

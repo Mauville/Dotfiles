@@ -36,7 +36,7 @@ map gk
 
 " Some leader basics
 
-noremap <leader><leader> <Esc>/<CR>c4l
+noremap <leader><leader> <Esc>/<++><CR>c4l
 noremap <leader>c :action OpenFile<CR>
 noremap <leader>n :action NewClass<CR>
 noremap <leader>s :so C:\Users\X220\.ideavimrc <CR>
@@ -55,13 +55,14 @@ vmap <C-K> xp`[V`]
 " Intellij custom actions
 """""""""""""""""""""
 
+noremap <leader>s :source ~/.ideavimrc<CR>
 noremap <leader>j :action Run<CR>
 noremap gq :action ReformatCode<CR>
 noremap gcc :action CommentByLineComment<CR>
 
 " IntelliJ search looks much better
-nnoremap / :action Find<cr>
-nnoremap g/ :action FindInPath<cr>
+" nnoremap / :action Find<cr>
+" nnoremap g/ :action FindInPath<cr>
 
 " built-in navigation to navigated items works better
 nnoremap <c-o> :action Back<cr>
@@ -85,6 +86,5 @@ noremap gs :action QuickJavaDoc<CR>
 
 
 " WEBSTORM
-" 
+"
 noremap <leader>b :action OpenInBrowser<CR>
-noremap gq :action ReformatWithPrettierAction<CR>
