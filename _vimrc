@@ -30,10 +30,20 @@ set enc=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf8,prc
 set autoread
-set scrolloff =5
 set textwidth=0
 set wrapmargin=0
 set mousemodel=popup
+
+" Start scrolling before n lines
+set scrolloff =5
+
+" Add column at 80 chars
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+
+" Easy exit from term
+tnoremap <Esc> <C-\><C-n>
 
 nnoremap zm zz
 
@@ -100,6 +110,12 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 " Plug 'SirVer/ultisnips'
 
 Plug 'dense-analysis/ale'
+
+" Plug 'ambv/black'
+
+Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
+
+Plug 'tmhedberg/simpylfold'
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -172,12 +188,12 @@ map k gk
 """ SPELL
 
 "Map F7 to spellchecker
-map <F7> :setlocal spell! spelllang=en_us<CR>
-map <F8> :setlocal spell! spelllang=es<CR>
+map <F8> :setlocal spell! spelllang=en_us<CR>
+map <F7> :setlocal spell! spelllang=es<CR>
 "Enable autocomplete from dict
 set complete+=kspell
 nnoremap <F10> [S
-nnoremap <F11> z=1<CR><CR>
+nnoremap <F11> z=1<CR><CR>]S
 nnoremap <F12> ]S
 
 "show commands while you type
@@ -213,7 +229,7 @@ if !has('nvim')
 endif
 
 "Map <leader>p to run with python3
-nnoremap <leader>p :below term python %<CR>
+autocmd FileType python map <buffer> <F2> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 
 "Map <leader>v to register paste
 nnoremap <leader>v "+p
@@ -228,9 +244,7 @@ nnoremap <leader><CR> A<CR>
 "Map leader backspace to insert whitespace before cursor
 nnoremap <leader><BS> I<CR>
 
-"Map leader j to compile with javac
-nnoremap <leader>j :!javac %<CR>
-
+autocmd FileType java map <buffer> <F2> :w<CR>:exec '!javac' shellescape(@%, 1)<CR>
 "Map leader qq to quit
 nnoremap <leader>qq :q!<CR>
 
@@ -293,18 +307,18 @@ let g:asciidoctor_css = 'ADOC.css'
 let g:asciidoctor_pdf_extensions = ['asciidoctor-diagram']
 
 "Compile
- nnoremap <leader>a :!asciidoctor-latex -b html -r asciidoctor-diagram -a config=..\plantuml.cfg %<CR><CR>
- nnoremap <leader>pa :!  asciidoctor -b pdf -r asciidoctor-diagram -a config=..\plantuml.cfg  -r asciidoctor-pdf % <CR><CR>
- nnoremap <leader>pal :! docker run --rm -v ${pwd}:/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf -r asciidoctor-diagram -r -a config=plantuml.cfg asciidoctor-mathematical % <CR><CR>
- nnoremap <leader>aw :Asciidoctor2DOCX<CR>
+nnoremap <leader>a :!asciidoctor-latex -b html -r asciidoctor-diagram -a config=$plantuml -a stylesheet=$stylesfile -a favicon=$favicon -a sectanchors -a stem=latexmath -a experimental -a highlightjs-theme=foundation -a source-highlighter=highlightjs -a icons=font % <CR>
+
+nnoremap <leader>pa :!asciidoctor -b pdf -r asciidoctor-diagram -a config=..\plantuml.cfg  -r asciidoctor-pdf % <CR>
+nnoremap <leader>pal :! docker run --rm -v ${pwd}:/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf -r asciidoctor-diagram -r -a config=plantuml.cfg asciidoctor-mathematical % <CR><CR>
+nnoremap <leader>aw :Asciidoctor2DOCX<CR>
 " Function to create buffer local mappings
 "nnoremap <buffer> <leader>a :Asciidoctor2HTML<CR>
 "nnoremap <buffer> <leader>pa :Asciidoctor2PDF<CR>
+nnoremap gp :!"C:\Program Files\Mozilla Firefox\firefox.exe"  file:///%:p <cr>
 
 nnoremap <buffer> <leader>op :AsciidoctorOpenPDF<CR>
 nnoremap <buffer> <leader>oa :AsciidoctorOpenHTML<CR>
-
-nnoremap <buffer> <leader>ox :AsciidoctorOpenDOCX<CR>
 
 " Fold sections, default `0`.
 let g:asciidoctor_folding = 1

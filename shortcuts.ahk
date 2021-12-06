@@ -23,7 +23,9 @@
 
 #SingleInstance FORCE
 #HotkeyInterval 160
-#NoTrayIcon
+;#NoTrayIcon
+SendMode Input
+CoordMode, Mouse, Screen  ; Absolute screen coordinates
 SetTitleMatchMode, 2
 SetWorkingDir %A_ScriptDir%
 
@@ -78,6 +80,7 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 	SoundBeep, 2500,150
 	Return
 
+
 :*:posh::
 	Send Powershell
 	SoundBeep, 2500,150
@@ -130,10 +133,6 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 ;;;;                    ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-#z:: ;Wox
-   Send ^!.
-   Return
-
 
 #d:: ;Calc
 Run, "C:\Program Files (x86)\SpeedCrunch\speedcrunch.exe"
@@ -152,7 +151,7 @@ Run, "C:\Program Files (x86)\SpeedCrunch\speedcrunch.exe"
 	Return
 
 #j:: ;Intellij
-	Run, idea64.exe
+	Run, idea
 	Return
 
 #n:: ; OneNote
@@ -168,19 +167,23 @@ $#Enter:: ;PowerShell. Control has been delegated to Wox
 	;sleep, 250
 	;send a
     ;Return
-	send #r
+	sendevent #r
 	prevclip=%clipboard%
-	command = powershell -nologo -noexit -command "cd '%USERPROFILE%'"
+	command = wt
 	clipboard:= command
-	sleep, 450
-	send ^v{enter}
+	sleep, 250
+	sendevent ^v{enter}
 	clipboard:=prevclip
+	;Run wt
+	;Run wt ; -Process wt -Verb runasuser ; -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
+	;RunAs
+    ;Run wt.exe -Process wt -Verb runasuser ; -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
 	Return
 
 #+Enter:: ;Powershell in current directory
 	Send {Escape}
 	Send ^l
-	SendInput powershell -nologo {Enter}
+	SendInput wt {Enter}
 	Return
 
 #f::  ;Run Firefox
@@ -200,7 +203,7 @@ $#Enter:: ;PowerShell. Control has been delegated to Wox
 	Run,powershell.exe %Userprofile%\Documents\zTRUE\chips\chips.ps1
 	Return
 
-#c:: ;Edit this file
++#v:: ;Edit this file
     Run, nvim-qt.exe %USERPROFILE%\Desktop\TEC\Dotfiles\shortcuts.ahk
     Return
 
@@ -208,34 +211,143 @@ $#Enter:: ;PowerShell. Control has been delegated to Wox
     Reload
     Return
 
-#+b:: ;BlackBoard
-    Run, https://miscursos.tec.mx/ultra/stream
-    Return
-
 ;;;;;;;
 ; courses
 ;;;;;;;
 
+ +!l:: ;langs
+    Run, zoommtg://zoom.us/join?action=join&confno=8896538266
+ 	Return
 
-#!a:: ;ADMIN
-    Run, https://experiencia21.tec.mx/courses/110411/assignments
-    Return
+ #!l:: ;Langs
+    Run, https://experiencia21.tec.mx/courses/166275/modules
+ 	Return
 
-+!a::
-    Run, zoommtg://zoom.us/join?action=join&confno=4771816524
-    Return
+ +!a:: ;api
+    Run, zoommtg://zoom.us/join?action=join&confno=8895403353
+ 	Return
 
-+!r:: ;Chess
-    Run, zoommtg://zoom.us/join?action=join&confno=6970653171
-    Return
+ #!a:: ;api
+ 	Run, https://experiencia21.tec.mx/courses/166333/modules
+ 	Return
 
-#!d:: ;Databases
-    Run, https://experiencia21.tec.mx/courses/110342/assignments
-    Return
+ +!e:: ;empren
+    Run, zoommtg://zoom.us/join?action=join&confno=7678184265
+ 	Return
 
-+!d::
-    Run, zoommtg://zoom.us/join?action=join&confno=2736320870
-    Return
+ #!e:: ;empren
+ 	Run, https://experiencia21.tec.mx/courses/164931/modules
+ 	Return
+
+
+ +!w:: ;web
+    Run, zoommtg://zoom.us/join?action=join&confno=6802790997
+ 	Return
+
+ #!w:: ;web
+	Run, https://experiencia21.tec.mx/courses/166317/modules
+ 	Return
+
+ #!p:: ;web project
+ 	Run, https://experiencia21.tec.mx/courses/166355/modules
+ 	Return
+
+ +!p:: ;web project
+    Run, zoommtg://zoom.us/join?action=join&confno=4535959294
+ 	Return
+
+ +!d:: ;deep
+    Run, zoommtg://zoom.us/join?action=join&confno=96943063778
+ 	Return
+
+ #!d:: ;deep
+ 	Run, https://experiencia21.tec.mx/courses/193568/modules
+ 	Return
+
+ +!s:: ;deep
+    Run, zoommtg://zoom.us/join?action=join&confno=8173250119
+ 	Return
+
+; +!s:: ;Sebas
+;     Run, zoommtg://zoom.us/join?action=join&confno=7301860067&pwd=TC9kS0l3V0dYUURFeWhtU1BPaUpkZz09
+; 	Return
+;
+; +!m:: ;Martha
+;     Run, zoommtg://zoom.us/join?action=join&confno=9577025203
+; 	Return
+;
+; #!m:: ;Martha
+;     Run, https://experiencia21.tec.mx/courses/162353/modules
+;     Return
+; #!s:: ;Sebas
+; 	Run, https://classroom.google.com/u/0/w/MzY1OTk2NTg0OTMy/t/all
+; 	Return
+
+;+!a::
+;    Run, zoommtg://zoom.us/join?action=join&confno=4771816524
+;    Return
+;
+;+!c:: ;Chess
+;    Run, zoommtg://zoom.us/join?action=join&confno=6970653171
+;    Return
+;
+;#!d:: ;Databases
+;    Run, https://experiencia21.tec.mx/courses/110342/modules
+;    Return
+;
+;+!d::
+;    ;Run, zoommtg://zoom.us/join?action=join&confno=2736320870
+;    Run, zoommtg://zoom.us/join?action=join&confno=9088298466
+;    Return
+;
+;#!t:: ;Tests
+;    Run, https://experiencia21.tec.mx/courses/110344/modules
+;    Return
+;
+;+!t::
+;	WDay:=((A_WDay>1)?A_WDay-1:A_WDay+6)
+;	MsgBox The current 24-hour time is %WDay%.
+;	if(WDay = 1){
+;		Run, zoommtg://zoom.us/join?action=join&confno=8895403353
+;		Return
+;		}
+;	else{
+;		Run, zoommtg://zoom.us/join?action=join&confno=9114124312
+;		Return
+;		}
+;
+;
+;#!l:: ;Lineal
+;    Run, https://experiencia21.tec.mx/courses/127076/modules
+;    Return
+;
+;+!l::
+;    Run, zoommtg://zoom.us/join?action=join&confno=8543638819
+;    Return
+;
+;#!m:: ;Mobile
+;    Run, https://experiencia21.tec.mx/courses/110334/modules
+;    Return
+;
+;+!m::
+;    Run, zoommtg://zoom.us/join?action=join&confno=6592082834
+;    Return
+;
+;#!p:: ;Photo
+;    Run, https://experiencia21.tec.mx/courses/129956/modules
+;    Return
+;
+;+!p::
+;    Run, zoommtg://zoom.us/join?action=join&confno=5738939861
+;    Return
+;
+;+!u::
+;    Run, zoommtg://zoom.us/join?action=join&confno=6320104751
+;    Return
+;+!o::
+;    Run, zoommtg://zoom.us/join?action=join&confno=6491302891
+;    Return
+
 
 
 #+x:: ;Restart
@@ -281,22 +393,8 @@ $#Enter:: ;PowerShell. Control has been delegated to Wox
     Return
 
 #/:: ;Search Prompt
-    InputBox, qry, Search, Startpage Search:,, , 125, 600
-    address=https://www.startpage.com/do/dsearch?query=
-    tail=&cat=web&pl=ext-ff&language=english
-
-	if ErrorLevel
-		Return
-	else
-	    Run, %address%%qry%%tail%
-	    Return
-
-#v:: ;Visual Code
-	Send {Escape}
-	Send ^l
-    Send, powershell -nologo -noexit -command "code .; Start-Sleep -s 4;exit"{ENTER}
-    Reload
-    Return
+	Run everything.exe
+	Return
 
 #Esc:: ;Pause Script
     Pause
@@ -340,7 +438,32 @@ $+BackSpace::
     Send ^+{Backspace}
     Return
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                                              ;;;;
+;;;;    External Keyboard Shortcuts               ;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+^+d:: ^#Right ;X220 specific bind. Use Browser Forward key to switch desktops
+
+
+^+a:: ^#Left ;X220 specific bind. Use Browser Back key to switch desktops
+
+
+;;Pause as mute key
+;Pause::
+;
+;SoundSet, +1, MASTER, mute,11 ;12 was my mic id number use the code below the dotted line to find your mic id. you need to replace all 12's  <---------IMPORTANT
+;SoundGet, mas
+;
+;ToolTip, Mute %master_mute% ;use a tool tip at mouse pointer to show what state mic is after toggle
+;SetTimer, RemoveToolTip, 1000
+;return
+;
+;RemoveToolTip:
+;SetTimer, RemoveToolTip, Off
+;ToolTip
+;return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                              ;;;;
@@ -349,8 +472,23 @@ $+BackSpace::
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
-
+;XButton2::
+	;MouseGetPos, posX, posY ; Get mouse position
+	;If (posX <= 22) and (posY <= 22){
+		;Send ^#{Right} ;X220 specific bind. Use Browser Forward key to switch desktops
+		;Return
+		;}
+	;Send {Browser_Forward}
+	;;Return
+;XButton1::
+	;MouseGetPos, posX, posY ; Get mouse position
+	;If (posX <= 22) and (posY <= 22){
+		;Send ^#{Left} ;X220 specific bind. Use Browser Forward key to switch desktops
+	;}
+	;Send {Browser_Back}
+	;Return
+;
+		;Return
 #q:: ;i3 like Kill Button
     Send !{F4}
     Return
@@ -358,6 +496,38 @@ $+BackSpace::
 #IfWinActive Windows PowerShell ;Enable Alt+F4 in Powershell
 #q::
     Send {Esc}exit{enter}
+    Return
++Up::
+    Send {Up}{enter}
+    Return
+#IfWinActive
+
+
+#IfWinActive Zoom Meeting ;Enable PrintScreen on Zoom
+PrintScreen::
+    Send ^!+{F8}
+    Return
+^PrintScreen::
+    Send ^!+{F9}
+    Return
+^+PrintScreen::
+    Send ^!+{F10}
+    Return
+XButton2::
+	MouseGetPos, posX, posY ; Get mouse position
+	If (posX <= 22) and (posY <= 22){
+		Send ^#{Right} ;X220 specific bind. Use Browser Forward key to switch desktops
+		Return
+	}
+	Send !v
+    Return
+XButton1::
+	MouseGetPos, posX, posY ; Get mouse position
+	If (posX <= 22) and (posY <= 22){
+		Send ^#{Left} ;X220 specific bind. Use Browser Forward key to switch desktops
+		Return
+	}
+	Send !a
     Return
 #IfWinActive
 
@@ -371,16 +541,22 @@ $+BackSpace::
     Return
 #IfWinActive
 
-#IfWinActive PowerShell ;Enable Alt+F4 in Cmder
-#q::
-    Send exit{enter}
-    Return
-#IfWinActive
 
-#IfWinActive Neovim ;Enable Alt+F4 in VIM
+#IfWinActive Neovim
+;Enable Alt+F4 in VIM
 #q::
-    Send :q!!{enter}
+    Send :q{!}{Enter}
     Return
+
+;Enable Ctrl+BackSpace in Vim
+$BackSpace::
+	Send ^w
+	Return
+
+F11::
+	Send ^{F11}
+    Return
+
 #IfWinActive
 
 #IfWinActive Thunderbird ; Archive on thunderbird
@@ -389,29 +565,24 @@ F12::
     Return
 #IfWinActive
 
-#IfWinActive Neovim ;Enable Ctrl+BackSpace in Vim
-    $BackSpace::
-    Send ^w
-    Return
-#IfWinActive
 
-#IfWinActive Anki - Oscar ;Remap ` to undo in Anki
+#IfWinActive User 1 - Anki ;Remap ` to undo in Anki
 `::
     Send ^z
     Return
 #IfWinActive
 
-#IfWinActive PowerShell ;Imitate sudo command in PowerShell
-:*:sudo::
-    SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
-    Return
-#IfWinActive
-
-#IfWinActive powerShell ;Imitate sudo command in PowerShell
-:*:sudo::
-    SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
-    Return
-#IfWinActive
+;#IfWinActive PowerShell ;Imitate sudo command in PowerShell
+;:*:sudo::
+;    SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
+;    Return
+;#IfWinActive
+;
+;#IfWinActive powerShell ;Imitate sudo command in PowerShell
+;:*:sudo::
+;    SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
+;    Return
+;#IfWinActive
 
 ~RButton & LButton Up:: ;X220 specific bind. Get Linux middle click with two buttons working
 MouseClick, Middle
@@ -431,6 +602,7 @@ Browser_Back::^#Left ;X220 specific bind. Use Browser Back key to switch desktop
 
 +Browser_Back:: ;Switch current thing to desktop left
 	Send #!Left
+
 	Return
 
 $*MButton::
