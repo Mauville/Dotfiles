@@ -168,7 +168,7 @@ Run, "C:\Program Files (x86)\SpeedCrunch\speedcrunch.exe"
 	Run, onenote
 	Return
 
-$#Enter:: ;PowerShell. Control has been delegated to Wox
+$#Enter:: ;PowerShell.
 	;send #-
 	;sleep, 550
 	;send {enter}
@@ -188,12 +188,12 @@ $#Enter:: ;PowerShell. Control has been delegated to Wox
 	;Run wt ; -Process wt -Verb runasuser ; -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
 	;RunAs
     ;Run wt.exe -Process wt -Verb runasuser ; -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
-	Return
+;	Return
 
 #+Enter:: ;Powershell in current directory
 	Send {Escape}
 	Send ^l
-	SendInput wt {Enter}
+	SendInput wt -d .{Enter}
 	Return
 
 #f::  ;Run Firefox
