@@ -450,30 +450,68 @@ $+BackSpace::
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                                              ;;;;
-;;;;    External Keyboard Shortcuts               ;;;;
+;;;;          Machine Specific Shortcuts          ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; Get Linux middle click with two buttons working (TPAD)
+~RButton & LButton Up::
+MouseClick, Middle
+Return
+~LButton & RButton Up::
+MouseClick, Middle
+Return
 
-^+d:: ^#Right ;X220 specific bind. Use Browser Forward key to switch desktops
+; X220 specific binds.
+if (%A_UserName% == "X220"){
+	^+d:: ^#Right ; Use Browser Forward key to switch desktops
+
+	^+a:: ^#Left ;Use Browser Back key to switch desktops
+
+	Browser_Forward::^#Right ;Use Browser Forward key to switch desktops
+
+	Browser_Back::^#Left ;Use Browser Back key to switch desktops
+
+	+Browser_Forward:: ;Switch current thing to desktop right
+		Send #!Right
+		Return
+
+	+Browser_Back:: ;Switch current thing to desktop left
+		Send #!Left
+		Return
+}
+if (%A_UserName% == "X1Carbon"){
+	; Remap disgusting PrtScr to ContextMenu
+	PrintScreen:: AppsKey
+	+PrintScreen:: Send +{PrintScreen}
+	^+PrintScreen:: Send ^+{PrintScreen}
+	; Workaround for FN Key: we can use it as a sticky key
+	SC163::
+	FnKey=1
+	Sleep, 1000
+	FnKey=0
+	return
+
+	If (FnKey==1){
+		Right::
+			Send {Media_Next}
+			Return
+		Left::
+			Send {Media_Prev}
+			Return
+		Down::
+			Send {Media_Play_Pause}
+			Return
+		PgDn::^#Right ;Use PgDn key to switch desktops
+
+		PgUp::^#Left ;Use PgUp key to switch desktops
+
+		FnKey=0
+		Return
+	}
 
 
-^+a:: ^#Left ;X220 specific bind. Use Browser Back key to switch desktops
+}
 
-
-;;Pause as mute key
-;Pause::
-;
-;SoundSet, +1, MASTER, mute,11 ;12 was my mic id number use the code below the dotted line to find your mic id. you need to replace all 12's  <---------IMPORTANT
-;SoundGet, mas
-;
-;ToolTip, Mute %master_mute% ;use a tool tip at mouse pointer to show what state mic is after toggle
-;SetTimer, RemoveToolTip, 1000
-;return
-;
-;RemoveToolTip:
-;SetTimer, RemoveToolTip, Off
-;ToolTip
-;return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;                              ;;;;
@@ -582,38 +620,6 @@ F12::
     Return
 #IfWinActive
 
-;#IfWinActive PowerShell ;Imitate sudo command in PowerShell
-;:*:sudo::
-;    SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
-;    Return
-;#IfWinActive
-;
-;#IfWinActive powerShell ;Imitate sudo command in PowerShell
-;:*:sudo::
-;    SendInput Start-Process Powershell -Verb runAs -ArgumentList "-noexit", "-command cd $PWD;cls";exit{Enter}
-;    Return
-;#IfWinActive
-
-~RButton & LButton Up:: ;X220 specific bind. Get Linux middle click with two buttons working
-MouseClick, Middle
-Return
-
-~LButton & RButton Up:: ;X220 specific bind. Get Linux middle click with two buttons working
-MouseClick, Middle
-Return
-
-Browser_Forward::^#Right ;X220 specific bind. Use Browser Forward key to switch desktops
-
-Browser_Back::^#Left ;X220 specific bind. Use Browser Back key to switch desktops
-
-+Browser_Forward:: ;Switch current thing to desktop right
-	Send #!Right
-	Return
-
-+Browser_Back:: ;Switch current thing to desktop left
-	Send #!Left
-
-	Return
 
 /* $*MButton:: */
 
