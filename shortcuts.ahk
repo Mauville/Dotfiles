@@ -491,23 +491,24 @@ if (%A_UserName% == "X1Carbon"){
 	FnKey=0
 	return
 
-	If (FnKey==1){
+	#If (FnKey == 1 )
 		Right::
 			Send {Media_Next}
+			FnKey=0
 			Return
 		Left::
 			Send {Media_Prev}
+			FnKey=0
 			Return
 		Down::
 			Send {Media_Play_Pause}
+			FnKey=0
 			Return
 		PgDn::^#Right ;Use PgDn key to switch desktops
 
 		PgUp::^#Left ;Use PgUp key to switch desktops
 
-		FnKey=0
-		Return
-	}
+	#If
 
 
 }
