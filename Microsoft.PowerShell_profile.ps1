@@ -193,5 +193,7 @@ function Make-Hardlink {
     New-Item -ItemType HardLink -Name $LinkName -Value $LinkTo
 }
 
+
 Set-Alias -Name mkhard -Value Make-Hardlink
-TEC=~/Desktop/TEC
+Set-Alias -Name ref -Value refreshenv
+$env:TEC = "~/Desktop/TEC"

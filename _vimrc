@@ -10,6 +10,7 @@
 "
 let mapleader = " "
 
+
 if has('nvim')
     " Enable actually working mouse stuff
     set mouse=a
@@ -42,8 +43,6 @@ set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 
-" Easy exit from term
-tnoremap <Esc> <C-\><C-n>
 
 nnoremap zm zz
 
@@ -100,20 +99,19 @@ set incsearch
 set nocompatible
 filetype off
 
-" set the runtime path to include Vundle and initialize
-set rtp+=$HOME/.vim/bundle/Vundle.vim/
 call plug#begin('$HOME/.vim/plugged/')
 
-" Colorschemes
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'numToStr/Comment.nvim'
+
+Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
+
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
-" Plug 'SirVer/ultisnips'
-
 Plug 'dense-analysis/ale'
-
-" Plug 'ambv/black'
-
-Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
 
 Plug 'tmhedberg/simpylfold'
 
@@ -130,8 +128,6 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-surround'
 
 Plug 'mbbill/undotree'
-
-Plug 'tpope/vim-commentary'
 
 Plug 'Yggdroot/indentLine'
 
@@ -175,8 +171,6 @@ if has("patch-7.4.354")
     set lbr
 endif
 
-"Turn on syntax
-syntax on
 
 "Since we use powerline, do not show the default status bar
 set noshowmode
@@ -229,7 +223,7 @@ if !has('nvim')
 endif
 
 "Map <leader>p to run with python3
-autocmd FileType python map <buffer> <F2> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python map <buffer> <F2> :w<CR>:exec '!python' shellescape(@%, 1)<CR>
 
 "Map <leader>v to register paste
 nnoremap <leader>v "+p
@@ -248,8 +242,17 @@ autocmd FileType java map <buffer> <F2> :w<CR>:exec '!javac' shellescape(@%, 1)<
 "Map leader qq to quit
 nnoremap <leader>qq :q!<CR>
 
-"Map <leader>t to prepend :tabdo
-nnoremap <leader>t :tabdo
+"Map <leader>t to open term below
+nnoremap <leader>t :bel 5new<CR>:term<CR>i cls<CR>
+
+" Open Tree
+nnoremap <F4> :NvimTreeToggle<CR>
+
+" Easy exit from term
+tnoremap <Esc> <C-\><C-n>
+tnoremap jj <C-\><C-n>
+
+nnoremap <leader>i <leader>t <F4>
 
 " Motion for "next object". For example, "din(" would go to the next "()" pair
 " and delete its contents.
@@ -268,8 +271,6 @@ endfunction
 " Automatically change cwd to the one that the current file is on
 autocmd BufEnter * silent! lcd %:p:h
 
-" Open Tree
-nnoremap <F4> :NERDTreeToggle<CR>
 
 "Map <leader>m to easymotion
 map <Leader>m <Plug>(easymotion-prefix)
@@ -347,11 +348,6 @@ nmap <leader>iv :AsciidoctorPasteImage<CR>
 " Avoid vimple collision with jj
 imap <c-x><c-c> <plug>vimple_completers_trigger
 
-""""""""""""
-"PYTHON CALC
-""""""""""""
-":command! -nargs=+ Calc :python3 print(<args>)
-":python3 from math import *
 
 """"""""""
 "WINDOWS
@@ -360,48 +356,126 @@ imap <c-x><c-c> <plug>vimple_completers_trigger
 if has("win32")
     set shellpipe=|
     set shellredir=>
+    set shell=pwsh.exe
+    set shellcmdflag=-NoLogo\ -Command
 endif
 
 
-" Enable true colors for OneLight
+" ONEHALF DARK THEME
+set t_Co=256
+set cursorline
+colorscheme onehalfdark
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
-syntax on
-set t_Co=256
-set cursorline
-colorscheme onehalfdark
-" lightline
-" let g:lightline.colorscheme='onehalfdark'
+
+" LIGHTLINE
 let g:lightline = {
     \ 'colorscheme': 'onehalfdark',
     \}
+
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier'],
-\   'css': ['prettier'],
-\   'python': ['autopep8'],
+\   'javascript': ['standard',],
+\   'typescript': ['standard',],
+\   'html': ['standard',],
+\   'css': ['standard',],
+\   'python': ['black',],
 \}
 let g:ale_linters = {
-\   'markdown': ['writegood'],
+\   'python': ['pylint', 'pyflakes'],
+\   'markdown': ['writegood',],
+\   'javascript': ['standard',],
+\   'typescript': ['standard',],
+\   'css': ['standard',],
+\   'html': ['standard',],
 \ }
+"Turn on syntax (Needs to be after ALE for pylint)
+syntax on
 
-let b:ale_linter_aliases = ['markdown', 'asciidoctor']
-" let g:ale_linters_explicit = 1
+" let b:ale_linter_aliases = ['markdown', 'asciidoctor']
+let g:ale_disable_lsp = 0
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
-let g:ale_javascript_standard_executable='/path/to/global/standard'
-
-" let g:ale_linters_explicit            = 1
 let g:ale_lint_on_text_changed        = 'never'
 let g:ale_lint_on_enter               = 0
 let g:ale_lint_on_save                = 1
 let g:ale_fix_on_save                 = 1
 let g:ale_sign_error = '●'
 let g:ale_sign_warning = '.'
+let g:ale_python_pylint_use_global=1
 
-" Ultisnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+nnoremap gq :ALEFix<CR>
+
+" Codeium
+imap <script><silent><nowait><expr> <Tab> codeium#Accept()
+
+" Treesitter
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable                     " Disable folding at startup.
+
+""""""""""""
+"
+" LUA CONFIG
+"
+""""""""""""
+lua << EOF
+require('Comment').setup()
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python","javascript", "typescript", "markdown","html","json","css","cpp" },
+  auto_install = true,
+  autotag = {
+    enable = true,
+  },
+  highlight = {
+    enable = false,
+    additional_vim_regex_highlighting = false,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn", -- set to `false` to disable one of the mappings
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+}
+
+--------------------
+-- NVIM-TREE CONFIG
+--------------------
+
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+local api = require("nvim-tree.api")
+
+-- custom mappings
+local function open_nvim_tree()
+    api.tree.open()
+end
+
+
+require("nvim-tree").setup({
+  sort = {
+    sorter = "case_sensitive",
+  },
+  view = {
+    width = 20,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+
+EOF
