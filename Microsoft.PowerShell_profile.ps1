@@ -194,3 +194,4 @@ function Make-Hardlink {
 }
 
 Set-Alias -Name mkhard -Value Make-Hardlink
+TEC=~/Desktop/TEC
